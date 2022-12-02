@@ -26,6 +26,14 @@ const taskScheme = new Schema({
     type: String,
     required: true,
   },
+  size: {
+    type: String,
+    required: false,
+  },
+  priority: {
+    type: String,
+    required: false,
+  },
   users: {
     type: [String],
     default: [],

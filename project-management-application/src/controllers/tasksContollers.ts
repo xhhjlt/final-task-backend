@@ -32,14 +32,14 @@ export const createTask = async (req: Request, res: Response) => {
   const boardId = req.baseUrl.split('/')[2];
   const columnId = req.baseUrl.split('/')[4];
 
-  const bodyError = checkBody(req.body, ['title', 'order', 'description', 'userId', 'users'])
+  const bodyError = checkBody(req.body, ['title', 'order', 'description', 'userId', 'users', 'size', 'priority'])
   if (bodyError) {
     return res.status(400).send(createError(400, "bad request: " + bodyError));
   }
 
-  const { title, order, description, userId, users } = req.body;
+  const { title, order, description, userId, users, size, priority } = req.body;
   try {
-    const newTask = await taskService.createTask({ title, order, description, userId, boardId, columnId, users }, guid, initUser);
+    const newTask = await taskService.createTask({ title, order, description, userId, boardId, columnId, users, size, priority }, guid, initUser);
     res.json(newTask);
   }
   catch (err) { return console.log(err); }
@@ -49,14 +49,14 @@ export const createTask = async (req: Request, res: Response) => {
 export const updateTask = async (req: Request, res: Response) => {
   const guid = req.header('Guid') || 'undefined';
   const initUser = req.header('initUser') || 'undefined';
-  const bodyError = checkBody(req.body, ['title', 'order', 'description', 'userId', 'columnId', 'users'])
+  const bodyError = checkBody(req.body, ['title', 'order', 'description', 'userId', 'columnId', 'users', 'size', 'priority'])
   if (bodyError) {
     return res.status(400).send(createError(400, "bad request: " + bodyError));
   }
-  const { title, order, description, userId, columnId, users } = req.body;
+  const { title, order, description, userId, columnId, users, size, priority } = req.body;
 
   try {
-    const updatedTask = await taskService.updateTask(req.params.taskId, { title, order, description, userId, columnId, users }, guid, initUser);
+    const updatedTask = await taskService.updateTask(req.params.taskId, { title, order, description, userId, columnId, users, size, priority }, guid, initUser);
     res.json(updatedTask);
   }
   catch (err) { return console.log(err); }
