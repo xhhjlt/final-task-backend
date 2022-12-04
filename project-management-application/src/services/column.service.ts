@@ -5,7 +5,8 @@ import * as boardService from './board.service';
 import { socket } from './server.service';
 
 export const createColumn = async (params: any, guid: string, initUser: string, emit = true, notify = true) => {
-  const newColumn = new column(params);
+  const columnsCount = (await findColumns({boardId: params.boardId})).length;
+  const newColumn = new column({...params, order: columnsCount});
   await newColumn.save();
   if (emit) {
     socket.emit('columns', {

@@ -8,7 +8,7 @@ const taskScheme = new Schema({
   },
   order: {
     type: Number,
-    required: true,
+    required: false,
   },
   description: {
     type: String,

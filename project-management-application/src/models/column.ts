@@ -8,7 +8,7 @@ const columnScheme = new Schema({
   },
   order: {
     type: Number,
-    required: true,
+    required: false,
   },
   boardId: {
     type: String,

@@ -6,7 +6,8 @@ import * as boardService from './board.service';
 import { socket } from './server.service';
 
 export const createTask = async (params: any, guid: string, initUser: string, emit = true, notify = true) => {
-  const newTask = new task(params);
+  const tasksCount = (await findTasks({boardId: params.boardId, columnId: params.columnId})).length;
+  const newTask = new task({...params, order: tasksCount});
   await newTask.save();
   if (emit) {
     socket.emit('tasks', {
